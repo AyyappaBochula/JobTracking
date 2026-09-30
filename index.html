@@ -733,4 +733,2031 @@ body.dark .badge-unknown{
 .modal-header{
     display:flex;
 
-    justify-content:s
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.modal-title{
+    font-size:20px;
+
+    font-weight:900;
+}
+
+.close-btn{
+    width:38px;
+    height:38px;
+
+    border:none;
+
+    background:var(--bg);
+
+    color:var(--text);
+
+    border-radius:50%;
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.form-group{
+    margin-bottom:12px;
+}
+
+.form-label{
+    display:block;
+
+    font-size:12px;
+
+    font-weight:900;
+
+    color:var(--muted);
+
+    margin-bottom:5px;
+}
+
+.form-input,
+.form-select,
+.form-textarea{
+    width:100%;
+
+    padding:12px;
+
+    border:2px solid var(--border);
+
+    border-radius:10px;
+
+    background:var(--card);
+
+    color:var(--text);
+
+    font-size:14px;
+
+    outline:none;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus{
+    border-color:#2563eb;
+}
+
+.form-textarea{
+    min-height:90px;
+
+    resize:vertical;
+}
+
+.save-btn{
+    width:100%;
+
+    padding:13px;
+
+    border:none;
+
+    background:#2563eb;
+
+    color:white;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty{
+    background:var(--card);
+
+    border:2px dashed var(--border);
+
+    border-radius:15px;
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    color:var(--muted);
+}
+
+/* =========================================================
+   BACKUP
+========================================================= */
+
+.bottom-tools{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:8px;
+
+    margin-top:16px;
+}
+
+.tool-btn{
+    padding:12px;
+
+    border:2px solid var(--border);
+
+    background:var(--card);
+
+    color:var(--text);
+
+    border-radius:10px;
+
+    font-size:11px;
+
+    font-weight:900;
+
+    cursor:pointer;
+}
+
+/* =========================================================
+   DESKTOP
+========================================================= */
+
+@media(min-width:700px){
+
+    .container{
+        padding:20px;
+    }
+
+    .company-list{
+        display:grid;
+
+        grid-template-columns:
+            1fr 1fr;
+
+        gap:12px;
+    }
+
+    .company-card{
+        margin-bottom:0;
+    }
+}
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media(max-width:380px){
+
+    .dashboard{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .quick-actions{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .company-name{
+        font-size:17px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =======================================================
+     HEADER
+======================================================== -->
+
+<header class="header">
+
+    <div class="header-row">
+
+        <div>
+            <h1>🚀 Hill 2 Jobs</h1>
+            <p>Visakhapatnam • Walk-in Tracker</p>
+        </div>
+
+        <div class="header-actions">
+
+            <button
+                class="header-btn"
+                onclick="toggleDarkMode()"
+                id="themeButton"
+                title="Change theme">
+                ☀️
+            </button>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     MAIN
+======================================================== -->
+
+<main class="container">
+
+
+<!-- DASHBOARD -->
+
+<section class="dashboard">
+
+    <div class="stat">
+        <div class="stat-icon">🏢</div>
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label">Companies</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">✅</div>
+        <div class="stat-number" id="visitedCount">0</div>
+        <div class="stat-label">Visited</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">👤</div>
+        <div class="stat-number" id="contactCount">0</div>
+        <div class="stat-label">Contacts</div>
+    </div>
+
+    <div class="stat">
+        <div class="stat-icon">📅</div>
+        <div class="stat-number" id="driveCount">0</div>
+        <div class="stat-label">Drives</div>
+    </div>
+
+</section>
+
+
+<!-- SEARCH -->
+
+<div class="search-box">
+
+    <input
+        class="search-input"
+        id="searchInput"
+        type="search"
+        placeholder="🔎 Search company, HR, phone..."
+        oninput="render()"
+    >
+
+    <button
+        class="clear-search"
+        onclick="clearSearch()">
+        ×
+    </button>
+
+</div>
+
+
+<!-- FILTERS -->
+
+<div class="filters">
+
+    <button
+        class="filter active"
+        onclick="setFilter('all',this)">
+        All
+    </button>
+
+    <button
+        class="filter"
+        onclick="setFilter('remaining',this)">
+        Not Visited
+    </button>
+
+    <button
+        class="filter"
+        onclick="setFilter('visited',this)">
+        Visited
+    </button>
+
+    <button
+        class="filter"
+        onclick="setFilter('drives',this)">
+        📅 Drives
+    </button>
+
+</div>
+
+
+<!-- ADD COMPANY -->
+
+<button
+    class="add-company"
+    onclick="openCompanyModal()">
+
+    ➕ Add New Company
+
+</button>
+
+
+<!-- COMPANY LIST -->
+
+<div
+    id="companyList"
+    class="company-list">
+</div>
+
+
+<!-- BACKUP -->
+
+<div class="bottom-tools">
+
+    <button
+        class="tool-btn"
+        onclick="exportData()">
+        📤 Backup
+    </button>
+
+    <button
+        class="tool-btn"
+        onclick="document.getElementById('importFile').click()">
+        📥 Restore
+    </button>
+
+</div>
+
+<input
+    type="file"
+    id="importFile"
+    accept=".json"
+    style="display:none"
+    onchange="importData(event)"
+>
+
+</main>
+
+
+<!-- =======================================================
+     COMPANY MODAL
+======================================================== -->
+
+<div
+    class="modal"
+    id="companyModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                <span id="companyModalTitle">
+                    Add Company
+                </span>
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('companyModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="companyForm">
+
+            <input
+                type="hidden"
+                id="companyId">
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Company Name *
+                </label>
+
+                <input
+                    class="form-input"
+                    id="companyName"
+                    required
+                    placeholder="Example: MOURI Tech">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Location / Plot
+                </label>
+
+                <input
+                    class="form-input"
+                    id="companyLocation"
+                    placeholder="Example: Plot D1, Hill 2">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Job Role
+                </label>
+
+                <input
+                    class="form-input"
+                    id="companyRole"
+                    placeholder="Python / React / Full Stack">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Opening Status
+                </label>
+
+                <select
+                    class="form-select"
+                    id="companyStatus">
+
+                    <option value="Unknown">
+                        Unknown
+                    </option>
+
+                    <option value="Hiring">
+                        🟢 Hiring
+                    </option>
+
+                    <option value="Interview">
+                        🔵 Interview
+                    </option>
+
+                    <option value="Future Opening">
+                        🟡 Future Opening
+                    </option>
+
+                    <option value="No Opening">
+                        🔴 No Opening
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    LinkedIn
+                </label>
+
+                <input
+                    class="form-input"
+                    id="companyLinkedin"
+                    placeholder="https://linkedin.com/company/...">
+
+            </div>
+
+
+            <button
+                class="save-btn"
+                type="submit">
+
+                💾 Save Company
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     CONTACT MODAL
+======================================================== -->
+
+<div
+    class="modal"
+    id="contactModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                👤 Add Contact
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('contactModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="contactForm">
+
+            <input
+                type="hidden"
+                id="contactCompanyId">
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Person Name
+                </label>
+
+                <input
+                    class="form-input"
+                    id="contactPerson"
+                    placeholder="HR / Recruiter name">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Mobile Number
+                </label>
+
+                <input
+                    class="form-input"
+                    id="contactPhone"
+                    type="tel"
+                    placeholder="9876543210">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Second Number
+                </label>
+
+                <input
+                    class="form-input"
+                    id="contactPhone2"
+                    type="tel"
+                    placeholder="Optional">
+
+            </div>
+
+
+            <button
+                class="save-btn"
+                type="submit">
+
+                💾 Save Contact
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     DRIVE MODAL
+======================================================== -->
+
+<div
+    class="modal"
+    id="driveModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                📅 Add Walk-in / Drive
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('driveModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="driveForm">
+
+            <input
+                type="hidden"
+                id="driveCompanyId">
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Drive Date *
+                </label>
+
+                <input
+                    class="form-input"
+                    id="driveDate"
+                    type="date"
+                    required>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Time
+                </label>
+
+                <input
+                    class="form-input"
+                    id="driveTime"
+                    type="time">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Role
+                </label>
+
+                <input
+                    class="form-input"
+                    id="driveRole"
+                    placeholder="Python Developer">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Details
+                </label>
+
+                <textarea
+                    class="form-textarea"
+                    id="driveDetails"
+                    placeholder="Reporting time, documents required, venue, rounds...">
+                </textarea>
+
+            </div>
+
+
+            <button
+                class="save-btn"
+                type="submit">
+
+                💾 Save Drive
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- =======================================================
+     NOTE MODAL
+======================================================== -->
+
+<div
+    class="modal"
+    id="noteModal">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                📝 Add Note
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closeModal('noteModal')">
+                ×
+            </button>
+
+        </div>
+
+
+        <form id="noteForm">
+
+            <input
+                type="hidden"
+                id="noteCompanyId">
+
+
+            <div class="form-group">
+
+                <label class="form-label">
+                    Note
+                </label>
+
+                <textarea
+                    class="form-textarea"
+                    id="noteText"
+                    placeholder="What did HR say? Salary? Next round? Follow-up date?">
+                </textarea>
+
+            </div>
+
+
+            <button
+                class="save-btn"
+                type="submit">
+
+                💾 Save Note
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   DEFAULT COMPANIES
+========================================================= */
+
+const defaultCompanies = [
+
+{
+id:1,
+name:"MOURI Tech",
+location:"Plot D1, IT Hill 2",
+role:"Software Developer / Trainee",
+status:"Unknown",
+linkedin:"https://www.linkedin.com/company/mouritech/",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:2,
+name:"Prime Web Services Pvt. Ltd.",
+location:"Plot D1, IT Hill 2",
+role:"Web Developer / Trainee",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:3,
+name:"AptLore Technologies Pvt. Ltd.",
+location:"Plot D1, IT Hill 2",
+role:"Software Developer",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:4,
+name:"Pennant Technologies Pvt. Ltd.",
+location:"Plot D2, IT Hill 2",
+role:"Software Engineer / Trainee",
+status:"Unknown",
+linkedin:"https://www.linkedin.com/company/pennant-technologies/",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:5,
+name:"ADROIT Software Technology",
+location:"Plot C2, IT Hill 2",
+role:"Software Developer",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:6,
+name:"Lorvenx Consulting & Allied Services",
+location:"C2 / IT Hill 2",
+role:"Software / IT",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:7,
+name:"SoftSol Vizag",
+location:"Plot 6, IT Hill 2",
+role:"Software Developer",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:8,
+name:"CognitiveInnovations Labs Pvt. Ltd.",
+location:"Plot 6, IT Hill 2",
+role:"Software / AI / IT",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:9,
+name:"Inspiredge IT Solutions",
+location:"Plot 7A, IT Hill 2",
+role:"Software / Web Developer",
+status:"Unknown",
+linkedin:"https://in.linkedin.com/company/inspiredge-it-solutions",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:10,
+name:"Cardlytics Services India Pvt. Ltd.",
+location:"Plot 12 & 13, IT Hill 2",
+role:"Software / IT",
+status:"Unknown",
+linkedin:"https://www.linkedin.com/company/cardlytics/",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:11,
+name:"Sikkolus Trading & Consultancy Services Pvt. Ltd.",
+location:"Plot 21 & 22, IT Hill 2",
+role:"IT / Software",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+},
+
+{
+id:12,
+name:"Signitive Towers Pvt. Ltd.",
+location:"IT Hill 2, Rushikonda",
+role:"IT / Software",
+status:"Unknown",
+linkedin:"",
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+}
+
+];
+
+
+/* =========================================================
+   LOAD DATA
+========================================================= */
+
+let companies =
+JSON.parse(
+    localStorage.getItem("hill2Jobs")
+) || JSON.parse(
+    JSON.stringify(defaultCompanies)
+);
+
+let currentFilter="all";
+
+
+/* =========================================================
+   SAVE
+========================================================= */
+
+function save(){
+
+localStorage.setItem(
+    "hill2Jobs",
+    JSON.stringify(companies)
+);
+
+}
+
+
+/* =========================================================
+   SAFE TEXT
+========================================================= */
+
+function safe(text){
+
+return String(text || "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function updateDashboard(){
+
+document.getElementById("totalCount").textContent =
+companies.length;
+
+document.getElementById("visitedCount").textContent =
+companies.filter(c=>c.visited).length;
+
+document.getElementById("contactCount").textContent =
+companies.filter(c=>c.contactName || c.phone).length;
+
+document.getElementById("driveCount").textContent =
+companies.filter(c=>c.driveDate).length;
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+function statusBadge(status){
+
+if(status==="Hiring"){
+return `<span class="badge badge-hiring">🟢 HIRING</span>`;
+}
+
+if(status==="Interview"){
+return `<span class="badge badge-interview">🔵 INTERVIEW</span>`;
+}
+
+if(status==="Future Opening"){
+return `<span class="badge badge-future">🟡 FUTURE</span>`;
+}
+
+if(status==="No Opening"){
+return `<span class="badge badge-none">🔴 NO OPENING</span>`;
+}
+
+return `<span class="badge badge-unknown">STATUS UNKNOWN</span>`;
+
+}
+
+
+/* =========================================================
+   RENDER
+========================================================= */
+
+function render(){
+
+const list =
+document.getElementById("companyList");
+
+const search =
+document.getElementById("searchInput")
+.value
+.toLowerCase()
+.trim();
+
+
+let filtered =
+companies.filter(c=>{
+
+let text = `
+
+${c.name}
+${c.location}
+${c.role}
+${c.contactName}
+${c.phone}
+${c.notes}
+
+`.toLowerCase();
+
+let searchMatch =
+text.includes(search);
+
+let filterMatch=true;
+
+if(currentFilter==="visited"){
+filterMatch=c.visited;
+}
+
+if(currentFilter==="remaining"){
+filterMatch=!c.visited;
+}
+
+if(currentFilter==="drives"){
+filterMatch=!!c.driveDate;
+}
+
+return searchMatch && filterMatch;
+
+});
+
+
+if(filtered.length===0){
+
+list.innerHTML=`
+
+<div class="empty">
+
+<div style="font-size:35px">
+🔍
+</div>
+
+<h3 style="margin-top:8px">
+No companies found
+</h3>
+
+<p style="margin-top:6px">
+Try another search or add a company.
+</p>
+
+</div>
+
+`;
+
+updateDashboard();
+
+return;
+
+}
+
+
+list.innerHTML =
+filtered.map((c,index)=>{
+
+let contactHTML="";
+
+if(c.contactName || c.phone){
+
+contactHTML=`
+
+<div class="quick-info">
+
+${c.contactName ?
+`
+<div class="info-chip">
+👤 ${safe(c.contactName)}
+</div>
+`
+:""}
+
+${c.phone ?
+`
+<div class="info-chip">
+📱 ${safe(c.phone)}
+</div>
+`
+:""}
+
+</div>
+
+`;
+
+}
+
+
+let driveHTML="";
+
+if(c.driveDate){
+
+let date =
+new Date(
+    c.driveDate+"T00:00:00"
+);
+
+driveHTML=`
+
+<div class="drive-box">
+
+<div class="drive-title">
+📅 WALK-IN / DRIVE
+</div>
+
+<div class="drive-date">
+
+${date.toLocaleDateString("en-IN")}
+
+${c.driveTime ?
+" • "+safe(c.driveTime)
+:""}
+
+</div>
+
+${c.driveRole ?
+`
+<div class="drive-details">
+💼 ${safe(c.driveRole)}
+</div>
+`
+:""}
+
+${c.driveDetails ?
+`
+<div class="drive-details">
+${safe(c.driveDetails)}
+</div>
+`
+:""}
+
+</div>
+
+`;
+
+}
+
+
+let noteHTML="";
+
+if(c.notes){
+
+noteHTML=`
+
+<div class="note-box">
+
+<div class="note-title">
+📝 NOTE
+</div>
+
+${safe(c.notes)}
+
+</div>
+
+`;
+
+}
+
+
+return `
+
+<article class="company-card
+${c.visited ? "visited":""}
+${c.status==="Hiring" ? "hiring":""}">
+
+
+<div class="company-top">
+
+<div>
+
+<div class="company-number">
+STOP ${String(c.id).padStart(2,"0")}
+</div>
+
+<div class="company-name">
+${safe(c.name)}
+</div>
+
+<div class="company-location">
+📍 ${safe(c.location || "Location not added")}
+</div>
+
+</div>
+
+</div>
+
+
+<div class="badges">
+
+${statusBadge(c.status)}
+
+${c.visited ?
+`
+<span class="badge badge-visited">
+✓ VISITED
+</span>
+`
+:""}
+
+${c.driveDate ?
+`
+<span class="badge badge-drive">
+📅 DRIVE
+</span>
+`
+:""}
+
+</div>
+
+
+${c.role ?
+`
+<div class="role">
+💼 ${safe(c.role)}
+</div>
+`
+:""}
+
+
+${contactHTML}
+
+
+${driveHTML}
+
+
+${noteHTML}
+
+
+<!-- QUICK ACTIONS -->
+
+<div class="quick-actions">
+
+
+${c.phone ?
+`
+<a
+class="quick-btn btn-call"
+href="tel:${safe(c.phone)}">
+📞 Call
+</a>
+`
+:
+`
+<button
+class="quick-btn btn-action"
+onclick="openContactModal(${c.id})">
+👤 + Contact
+</button>
+`
+}
+
+
+<button
+class="quick-btn btn-map"
+onclick="openMaps(${c.id})">
+📍 Maps
+</button>
+
+
+<a
+class="quick-btn btn-linkedin"
+target="_blank"
+href="${
+c.linkedin ||
+'https://www.linkedin.com/search/results/companies/?keywords='+
+encodeURIComponent(c.name)
+}">
+🔗 LinkedIn
+</a>
+
+
+<button
+class="quick-btn btn-action"
+onclick="openContactModal(${c.id})">
+${c.contactName || c.phone ?
+"✏️ Contact"
+:"+ Contact"}
+</button>
+
+
+<button
+class="quick-btn btn-action"
+onclick="openDriveModal(${c.id})">
+${c.driveDate ?
+"✏️ Drive"
+:"+ Drive"}
+</button>
+
+
+<button
+class="quick-btn btn-action"
+onclick="openNoteModal(${c.id})">
+${c.notes ?
+"✏️ Note"
+:"+ Note"}
+</button>
+
+
+<button
+class="quick-btn btn-action"
+onclick="editCompany(${c.id})">
+✏️ Edit
+</button>
+
+
+</div>
+
+
+<button
+class="visit-btn"
+onclick="toggleVisited(${c.id})">
+
+${c.visited ?
+"✓ VISITED — TAP TO UNDO"
+:
+"✓ MARK AS VISITED"}
+
+</button>
+
+
+</article>
+
+`;
+
+}).join("");
+
+
+updateDashboard();
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function setFilter(type,button){
+
+currentFilter=type;
+
+document
+.querySelectorAll(".filter")
+.forEach(b=>{
+b.classList.remove("active");
+});
+
+button.classList.add("active");
+
+render();
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function clearSearch(){
+
+document.getElementById("searchInput").value="";
+
+render();
+
+}
+
+
+/* =========================================================
+   MAPS
+========================================================= */
+
+function openMaps(id){
+
+const c =
+companies.find(x=>x.id===id);
+
+const query =
+encodeURIComponent(
+`${c.name}, ${c.location}, Rushikonda, Visakhapatnam`
+);
+
+window.open(
+`https://www.google.com/maps/search/?api=1&query=${query}`,
+"_blank"
+);
+
+}
+
+
+/* =========================================================
+   VISITED
+========================================================= */
+
+function toggleVisited(id){
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+c.visited=!c.visited;
+
+save();
+
+render();
+
+}
+
+
+/* =========================================================
+   MODAL FUNCTIONS
+========================================================= */
+
+function openModal(id){
+
+document
+.getElementById(id)
+.classList.add("show");
+
+}
+
+function closeModal(id){
+
+document
+.getElementById(id)
+.classList.remove("show");
+
+}
+
+
+/* =========================================================
+   COMPANY MODAL
+========================================================= */
+
+function openCompanyModal(id=null){
+
+const form =
+document.getElementById("companyForm");
+
+form.reset();
+
+document.getElementById("companyId").value="";
+
+document.getElementById("companyModalTitle")
+.textContent =
+id ? "Edit Company" : "Add Company";
+
+
+if(id){
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+document.getElementById("companyId").value=c.id;
+
+document.getElementById("companyName").value=c.name;
+
+document.getElementById("companyLocation").value=c.location;
+
+document.getElementById("companyRole").value=c.role;
+
+document.getElementById("companyStatus").value=c.status;
+
+document.getElementById("companyLinkedin").value=c.linkedin;
+
+}
+
+openModal("companyModal");
+
+}
+
+
+/* =========================================================
+   SAVE COMPANY
+========================================================= */
+
+document
+.getElementById("companyForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const id =
+document.getElementById("companyId").value;
+
+
+if(id){
+
+const c =
+companies.find(
+x=>x.id===Number(id)
+);
+
+c.name =
+document.getElementById("companyName").value;
+
+c.location =
+document.getElementById("companyLocation").value;
+
+c.role =
+document.getElementById("companyRole").value;
+
+c.status =
+document.getElementById("companyStatus").value;
+
+c.linkedin =
+document.getElementById("companyLinkedin").value;
+
+}else{
+
+companies.push({
+
+id:Date.now(),
+
+name:
+document.getElementById("companyName").value,
+
+location:
+document.getElementById("companyLocation").value,
+
+role:
+document.getElementById("companyRole").value,
+
+status:
+document.getElementById("companyStatus").value,
+
+linkedin:
+document.getElementById("companyLinkedin").value,
+
+contactName:"",
+phone:"",
+phone2:"",
+driveDate:"",
+driveTime:"",
+driveRole:"",
+driveDetails:"",
+notes:"",
+visited:false
+
+});
+
+}
+
+save();
+
+closeModal("companyModal");
+
+render();
+
+});
+
+
+/* =========================================================
+   EDIT COMPANY
+========================================================= */
+
+function editCompany(id){
+
+openCompanyModal(id);
+
+}
+
+
+/* =========================================================
+   CONTACT MODAL
+========================================================= */
+
+function openContactModal(id){
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+document.getElementById("contactCompanyId").value=id;
+
+document.getElementById("contactPerson").value =
+c.contactName || "";
+
+document.getElementById("contactPhone").value =
+c.phone || "";
+
+document.getElementById("contactPhone2").value =
+c.phone2 || "";
+
+openModal("contactModal");
+
+}
+
+
+/* =========================================================
+   SAVE CONTACT
+========================================================= */
+
+document
+.getElementById("contactForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const id =
+Number(
+document.getElementById("contactCompanyId").value
+);
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+c.contactName =
+document.getElementById("contactPerson").value;
+
+c.phone =
+document.getElementById("contactPhone").value;
+
+c.phone2 =
+document.getElementById("contactPhone2").value;
+
+save();
+
+closeModal("contactModal");
+
+render();
+
+});
+
+
+/* =========================================================
+   DRIVE MODAL
+========================================================= */
+
+function openDriveModal(id){
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+document.getElementById("driveCompanyId").value=id;
+
+document.getElementById("driveDate").value =
+c.driveDate || "";
+
+document.getElementById("driveTime").value =
+c.driveTime || "";
+
+document.getElementById("driveRole").value =
+c.driveRole || c.role || "";
+
+document.getElementById("driveDetails").value =
+c.driveDetails || "";
+
+openModal("driveModal");
+
+}
+
+
+/* =========================================================
+   SAVE DRIVE
+========================================================= */
+
+document
+.getElementById("driveForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const id =
+Number(
+document.getElementById("driveCompanyId").value
+);
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+c.driveDate =
+document.getElementById("driveDate").value;
+
+c.driveTime =
+document.getElementById("driveTime").value;
+
+c.driveRole =
+document.getElementById("driveRole").value;
+
+c.driveDetails =
+document.getElementById("driveDetails").value;
+
+save();
+
+closeModal("driveModal");
+
+render();
+
+});
+
+
+/* =========================================================
+   NOTE MODAL
+========================================================= */
+
+function openNoteModal(id){
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+document.getElementById("noteCompanyId").value=id;
+
+document.getElementById("noteText").value =
+c.notes || "";
+
+openModal("noteModal");
+
+}
+
+
+/* =========================================================
+   SAVE NOTE
+========================================================= */
+
+document
+.getElementById("noteForm")
+.addEventListener("submit",function(e){
+
+e.preventDefault();
+
+const id =
+Number(
+document.getElementById("noteCompanyId").value
+);
+
+const c =
+companies.find(x=>x.id===id);
+
+if(!c)return;
+
+c.notes =
+document.getElementById("noteText").value;
+
+save();
+
+closeModal("noteModal");
+
+render();
+
+});
+
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+function toggleDarkMode(){
+
+document.body.classList.toggle("dark");
+
+const dark =
+document.body.classList.contains("dark");
+
+localStorage.setItem(
+"hill2Theme",
+dark ? "dark":"light"
+);
+
+document.getElementById("themeButton")
+.textContent =
+dark ? "🌙":"☀️";
+
+}
+
+
+/* =========================================================
+   LOAD THEME
+========================================================= */
+
+if(
+localStorage.getItem("hill2Theme")==="dark"
+){
+
+document.body.classList.add("dark");
+
+document.getElementById("themeButton")
+.textContent="🌙";
+
+}
+
+
+/* =========================================================
+   EXPORT
+========================================================= */
+
+function exportData(){
+
+const data =
+JSON.stringify(
+companies,
+null,
+2
+);
+
+const blob =
+new Blob(
+[data],
+{
+type:"application/json"
+}
+);
+
+const url =
+URL.createObjectURL(blob);
+
+const a =
+document.createElement("a");
+
+a.href=url;
+
+a.download=
+"hill2-job-tracker-backup.json";
+
+a.click();
+
+URL.revokeObjectURL(url);
+
+}
+
+
+/* =========================================================
+   IMPORT
+========================================================= */
+
+function importData(event){
+
+const file =
+event.target.files[0];
+
+if(!file)return;
+
+const reader =
+new FileReader();
+
+reader.onload=function(e){
+
+try{
+
+const imported =
+JSON.parse(e.target.result);
+
+if(!Array.isArray(imported))
+throw new Error();
+
+companies=imported;
+
+save();
+
+render();
+
+alert(
+"Backup restored successfully."
+);
+
+}catch(error){
+
+alert(
+"Invalid backup file."
+);
+
+}
+
+};
+
+reader.readAsText(file);
+
+}
+
+
+/* =========================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+========================================================= */
+
+document
+.querySelectorAll(".modal")
+.forEach(modal=>{
+
+modal.addEventListener(
+"click",
+function(e){
+
+if(e.target===modal){
+
+modal.classList.remove("show");
+
+}
+
+});
+
+});
+
+
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
+render();
+
+</script>
+
+</body>
+</html>
